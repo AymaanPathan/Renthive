@@ -1,5 +1,4 @@
 import Category from "./Category";
-import room from "../../assets/room.jpg";
 import villa from "../../assets/villa.jpg";
 import resort from "../../assets/resort.jpg";
 import apartment from "../../assets/apartment.jpg";
@@ -10,7 +9,6 @@ function CategoryMain() {
       <Category categoryName="Resort" image={resort} />
       <Category categoryName="House & Villa" image={villa} />
       <Category categoryName="Apartment" image={apartment} />
-      <Category categoryName="Single Room" image={room} />
     </div>
   );
 }

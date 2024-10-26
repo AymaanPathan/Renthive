@@ -1,16 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const User = require("./Models/User");
 const Auth = require("./Auth/Auth");
-const bcrypt = require("bcryptjs");
-const RoomsApi = require("./Room/Room");
-const fs = require("fs");
-
+const Resort = require("./ResortsApi/Resort");
 const app = express();
+const upload = require("./Middleware/multer");
+const uploadApi = require("./Upload/Upload");
 
 app.use(express.json());
-// CORS configuration
 app.use(
   cors({
     origin: "*",
@@ -22,7 +19,7 @@ const connectDb = async () => {
   try {
     await mongoose.connect(
       "mongodb+srv://aymaanpathan5:Z7a4XGQoIekJLKjQ@cluster0.tzf2e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-      { serverSelectionTimeoutMS: 5000 } // Adjust timeout as needed
+      { serverSelectionTimeoutMS: 5000 }
     );
     console.log("Connected To DataBase⭐");
   } catch (error) {
@@ -30,7 +27,6 @@ const connectDb = async () => {
   }
 };
 
-// Mongoose connection events
 mongoose.connection.on("error", (error) => {
   console.error("MongoDB connection error:", error);
 });
@@ -43,7 +39,6 @@ mongoose.connection.on("disconnected", () => {
   console.log("Disconnected from MongoDB");
 });
 
-// Call the connect function
 connectDb();
 
 const importData = async () => {};
@@ -56,10 +51,14 @@ if (process.argv[2] == "--import") {
   deleteData();
 }
 
-// Define routes
+// Define routes ///
+
 const Route = express.Router();
 Route.post("/register", Auth.Register);
-Route.post("/addRoom", RoomsApi.createRoom);
+Route.post("/addResort", Resort.addResort);
+
+// Image Upload
+Route.post("/upload", upload.single("image"), uploadApi.uploadImage);
 
 app.use(Route);
 
