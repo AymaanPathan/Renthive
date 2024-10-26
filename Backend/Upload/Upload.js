@@ -1,22 +1,34 @@
 const cloudinary = require("../Utils/cloudinary");
 
-exports.uploadImage = (req, res) => {
+exports.uploadImage = (req, res, next) => {
   try {
-    cloudinary.uploader.upload(req.file.path, function (result, err) {
-      if (err) {
-        console.log(err);
+    // Check if req.file is available
+    if (!req.file) {
+      return res.status(400).json({
+        Status: "Failed",
+        Message: "No file uploaded. Please check the form field name.",
+      });
+    }
+
+    // Proceed with the upload
+    cloudinary.uploader.upload(req.file.path, (result, error) => {
+      if (error) {
+        console.log("Cloudinary upload error:", error);
         return res.status(500).json({
           Status: "Failed",
-          Message: err,
+          Message: "Error uploading image to Cloudinary.",
         });
       }
-      res.status(200).json({
-        Status: "Success",
-        Message: "Image Uploaded!!",
-        data: result,
-      });
+
+      // Attach the image URL to the request object for the next middleware
+      req.imageUrl = result.secure_url; // Ensure secure URL is used
+      next(); // Move to the next middleware
     });
   } catch (error) {
-    console.log(error);
+    console.error("Unexpected error in uploadImage:", error);
+    res.status(500).json({
+      Status: "Failed",
+      Message: "Unexpected error during image upload.",
+    });
   }
 };

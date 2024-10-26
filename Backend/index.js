@@ -55,7 +55,12 @@ if (process.argv[2] == "--import") {
 
 const Route = express.Router();
 Route.post("/register", Auth.Register);
-Route.post("/addResort", Resort.addResort);
+Route.post(
+  "/addResort",
+  upload.single("image"),
+  uploadApi.uploadImage,
+  Resort.addResort
+);
 
 // Image Upload
 Route.post("/upload", upload.single("image"), uploadApi.uploadImage);

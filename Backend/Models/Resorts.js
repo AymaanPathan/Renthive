@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ResortSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    // required: true,
   },
   location: {
     city: String,
@@ -27,7 +27,7 @@ const ResortSchema = new mongoose.Schema({
       "Forest Resort",
       "Adventure Resort",
     ],
-    required: true,
+    // required: true,
   },
   priceRange: {
     min: Number,
@@ -69,6 +69,9 @@ const ResortSchema = new mongoose.Schema({
       description: String,
       activities: [String],
     },
+  },
+  imageUrl: {
+    type: String, // This field will hold the URL of the uploaded image
   },
   createdAt: {
     type: Date,

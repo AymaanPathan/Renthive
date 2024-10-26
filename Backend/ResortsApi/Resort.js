@@ -15,6 +15,14 @@ exports.addResort = async (req, res) => {
       ageGroupSuitability,
     } = req.body;
 
+    // Ensure the image URL is available
+    if (!req.imageUrl) {
+      return res.status(400).json({
+        message: "Image upload failed, no image URL provided.",
+      });
+    }
+
+    // Create a new resort with the provided details and uploaded image URL
     const newResort = new Resort({
       name,
       location,
@@ -26,10 +34,13 @@ exports.addResort = async (req, res) => {
       distanceFromCityCenter,
       accessibilityFeatures,
       ageGroupSuitability,
+      imageUrl: req.imageUrl, // Get the image URL from the request
     });
 
+    // Save the resort to the database
     await newResort.save();
 
+    // Respond with success
     res.status(201).json({
       message: "Resort added successfully!",
       resort: newResort,
