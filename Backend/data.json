@@ -1,0 +1,56 @@
+{
+  "name": "Mountain Bliss Resort",
+  "location": "Rocky Mountains, Colorado, USA",
+  "longitude": -106.445356,
+  "latitude": 39.550051,
+  "category": "Hill Resort",
+  "price": 250,
+  "amenities": {
+    "roomTypes": ["Suite", "Deluxe", "Standard"],
+    "facilities": ["Spa", "Swimming Pool", "Free Wi-Fi", "Restaurant", "Gym"],
+    "activities": ["Hiking", "Skiing", "Nature Walks", "Yoga Classes"]
+  },
+  "rating": {
+    "averageRating": 4.5,
+    "reviews": [
+      {
+        "userId": "609cdd0f1b314c16f4dcb3e2",
+        "rating": 5,
+        "comment": "Beautiful place, amazing service!"
+      },
+      {
+        "userId": "609cdd0f1b314c16f4dcb3e3",
+        "rating": 4,
+        "comment": "Great location, but food was a bit expensive."
+      }
+    ]
+  },
+  "nearbyAttractions": [
+    "Lake View Point",
+    "Rocky Mountain National Park",
+    "Snowshoe Trail"
+  ],
+  "accessibilityFeatures": {
+    "wheelchairAccessible": true,
+    "shuttleService": true
+  },
+  "ageGroupSuitability": {
+    "teenagers": {
+      "suitable": true,
+      "description": "Ideal for teenagers with adventurous activities.",
+      "activities": ["Mountain Biking", "Rock Climbing"]
+    },
+    "adults": {
+      "suitable": true,
+      "description": "Perfect for adults seeking relaxation and adventure.",
+      "activities": ["Spa", "Guided Hiking Tours"]
+    },
+    "seniors": {
+      "suitable": true,
+      "description": "Quiet environment with easy access trails and peaceful views.",
+      "activities": ["Bird Watching", "Lake Viewing"]
+    }
+  },
+  "imageUrl": "https://example.com/image.jpg",
+  "createdAt": "2024-10-25T10:30:00Z"
+}

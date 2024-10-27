@@ -4,37 +4,40 @@ exports.addResort = async (req, res) => {
   try {
     const {
       name,
+      description,
       location,
       category,
-      priceRange,
-      amenities,
+      price,
+      roomTypes,
+      facilities,
+      activities,
       rating,
-      nearbyAttractions,
-      distanceFromCityCenter,
-      accessibilityFeatures,
-      ageGroupSuitability,
+      wheelchairAccessible,
+      shuttleService,
+      teenagersFacilities,
+      adultsFacilities,
+      seniorsFacilities,
+      imageUrl, // Include imageUrl from req.body
     } = req.body;
 
-    // Ensure the image URL is available
-    if (!req.imageUrl) {
-      return res.status(400).json({
-        message: "Image upload failed, no image URL provided.",
-      });
-    }
-
-    // Create a new resort with the provided details and uploaded image URL
     const newResort = new Resort({
       name,
+      description,
       location,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude,
       category,
-      priceRange,
-      amenities,
+      price,
+      roomTypes,
+      facilities,
+      activities,
       rating,
-      nearbyAttractions,
-      distanceFromCityCenter,
-      accessibilityFeatures,
-      ageGroupSuitability,
-      imageUrl: req.imageUrl, // Get the image URL from the request
+      wheelchairAccessible,
+      shuttleService,
+      teenagersFacilities,
+      adultsFacilities,
+      seniorsFacilities,
+      imageUrl, // Add imageUrl here
     });
 
     // Save the resort to the database

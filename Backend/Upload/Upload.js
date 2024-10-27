@@ -20,9 +20,11 @@ exports.uploadImage = (req, res, next) => {
         });
       }
 
-      // Attach the image URL to the request object for the next middleware
-      req.imageUrl = result.secure_url; // Ensure secure URL is used
-      next(); // Move to the next middleware
+      res.status(200).json({
+        Status: "Success",
+        Message: "Image Uploaded!!!",
+        imageUrl: result.secure_url,
+      });
     });
   } catch (error) {
     console.error("Unexpected error in uploadImage:", error);

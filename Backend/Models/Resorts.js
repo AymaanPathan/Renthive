@@ -3,15 +3,23 @@ const mongoose = require("mongoose");
 const ResortSchema = new mongoose.Schema({
   name: {
     type: String,
-    // required: true,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
   },
   location: {
-    city: String,
-    state: String,
-    coordinates: {
-      latitude: Number,
-      longitude: Number,
-    },
+    type: String,
+    required: true,
+  },
+  longitude: {
+    type: Number,
+    required: true,
+  },
+  latitude: {
+    type: Number,
+    required: true,
   },
   category: {
     type: String,
@@ -27,51 +35,50 @@ const ResortSchema = new mongoose.Schema({
       "Forest Resort",
       "Adventure Resort",
     ],
-    // required: true,
+    required: true,
   },
-  priceRange: {
-    min: Number,
-    max: Number,
+  price: {
+    type: Number,
+    required: true,
   },
-  amenities: {
-    roomTypes: [String],
-    facilities: [String],
-    activities: [String],
+  roomTypes: {
+    type: [String],
+    required: true,
+  },
+  facilities: {
+    type: [String],
+    required: true,
+  },
+  activities: {
+    type: [String],
+    required: true,
   },
   rating: {
-    averageRating: { type: Number, default: 0 },
-    reviews: [
-      {
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        rating: { type: Number, required: true },
-        comment: String,
-      },
-    ],
+    type: Number,
   },
-  nearbyAttractions: [String],
-  accessibilityFeatures: {
-    wheelchairAccessible: { type: Boolean, default: false },
-    shuttleService: { type: Boolean, default: false },
+  wheelchairAccessible: {
+    type: Boolean,
+    default: false,
   },
-  ageGroupSuitability: {
-    teenagers: {
-      suitable: { type: Boolean, default: false },
-      description: String,
-      activities: [String],
-    },
-    adults: {
-      suitable: { type: Boolean, default: false },
-      description: String,
-      activities: [String],
-    },
-    seniors: {
-      suitable: { type: Boolean, default: false },
-      description: String,
-      activities: [String],
-    },
+  shuttleService: {
+    type: Boolean,
+    default: false,
+  },
+  teenagersFacilities: {
+    type: String,
+    activities: [String],
+  },
+  adultsFacilities: {
+    type: String,
+    activities: [String],
+  },
+  seniorsFacilities: {
+    type: String,
+    activities: [String],
   },
   imageUrl: {
-    type: String, // This field will hold the URL of the uploaded image
+    type: String,
+    required: [true, "image is missing"],
   },
   createdAt: {
     type: Date,
