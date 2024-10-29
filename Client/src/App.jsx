@@ -4,7 +4,7 @@ import Home from "./Pages/Home/Home";
 import { Toaster } from "react-hot-toast";
 import Register from "./Components/Register/Register";
 import Profile from "./Components/Profile/Profile";
-import AddResort from "./Components/AddRooms/AddRooms";
+import AddResort from "./Components/AddRooms/AddResort";
 
 export default function App() {
   return (

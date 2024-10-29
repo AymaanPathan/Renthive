@@ -6,6 +6,8 @@ exports.addResort = async (req, res) => {
       name,
       description,
       location,
+      longitude,
+      latitude,
       category,
       price,
       roomTypes,
@@ -17,15 +19,15 @@ exports.addResort = async (req, res) => {
       teenagersFacilities,
       adultsFacilities,
       seniorsFacilities,
-      imageUrl, // Include imageUrl from req.body
+      imageUrl,
     } = req.body;
 
     const newResort = new Resort({
       name,
       description,
       location,
-      longitude: req.body.longitude,
-      latitude: req.body.latitude,
+      longitude,
+      latitude,
       category,
       price,
       roomTypes,
@@ -37,7 +39,7 @@ exports.addResort = async (req, res) => {
       teenagersFacilities,
       adultsFacilities,
       seniorsFacilities,
-      imageUrl, // Add imageUrl here
+      imageUrl,
     });
 
     // Save the resort to the database

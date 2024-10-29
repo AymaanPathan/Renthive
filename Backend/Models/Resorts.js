@@ -65,17 +65,14 @@ const ResortSchema = new mongoose.Schema({
     default: false,
   },
   teenagersFacilities: {
-    type: String,
-    activities: [String],
+    type: [String],
+    required: true,
   },
   adultsFacilities: {
-    type: String,
-    activities: [String],
+    type: [String],
+    required: true,
   },
-  seniorsFacilities: {
-    type: String,
-    activities: [String],
-  },
+
   imageUrl: {
     type: String,
     required: [true, "image is missing"],
