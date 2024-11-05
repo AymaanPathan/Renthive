@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import Register from "./Components/Register/Register";
 import Profile from "./Components/Profile/Profile";
 import AddResort from "./Components/AddRooms/AddResort";
+import AddHouse from "./Components/AddHouse/AddHouse";
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<AddResort />} />
+        <Route path="/dashboard/addResort" element={<AddResort />} />
+        <Route path="/dashboard/addHouse" element={<AddHouse />} />
       </Routes>
     </main>
   );

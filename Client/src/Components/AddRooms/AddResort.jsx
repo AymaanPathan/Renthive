@@ -7,10 +7,10 @@ function AddResort() {
   const [resortName, setResortName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
-  const [longitude, setLongiTude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongiTude] = useState(null);
+  const [latitude, setLatitude] = useState(null);
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(null);
   const [roomTypes, setRoomTypes] = useState("");
   let [facilities, setFacilities] = useState([]);
   let [activities, setActivities] = useState([]);
@@ -99,13 +99,11 @@ function AddResort() {
         toast.error("Please Try Again Later");
       }
     } catch (error) {
+      toast.dismiss();
+      toast.error("Internal Server Error For Image Uploading");
       console.log(error);
     }
   };
-
-  console.log(`${ownerName} +  ${typeof ownerName}`);
-  console.log(`${ownerExperience} +  ${typeof ownerExperience}`);
-  console.log(`${ownerEmail} +  ${typeof ownerEmail}`);
 
   const handleAddResort = async () => {
     if (
@@ -193,7 +191,7 @@ function AddResort() {
   };
 
   return (
-    <div className="flex gap-4 justify-between select-none h-[78rem]">
+    <div className="flex gap-4 justify-between select-none h-full">
       <SidebarWithSearch />
       <div className="bg-[#FFFFFF] w-full h-24">
         <h2 className="text-gray-600 text-center text-2xl mt-2">Dashboard</h2>
@@ -281,7 +279,7 @@ function AddResort() {
                 value={latitude}
                 onChange={(e) => setLatitude(e.target.value)}
                 type="Number"
-                placeholder="Resort longitude Here"
+                placeholder="Resort Latitude Here"
                 className="bg-[#F2F4F7] h-10 px-4 rounded-md outline-none w-full"
               />
             </div>

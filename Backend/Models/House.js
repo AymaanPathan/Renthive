@@ -46,7 +46,7 @@ const House_Villa_Schema = new mongoose.Schema({
     trim: true,
   },
   images: {
-    type: [String],
+    type: String,
   },
   availability: {
     type: Boolean,
