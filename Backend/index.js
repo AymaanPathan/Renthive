@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Auth = require("./Auth/Auth");
-const Resort = require("./ResortsApi/Resort");
+const Resort = require("./Resorts_Api/Resort_Api");
+const Property = require("./House_Villa_Api/House_Villa_Api");
 const app = express();
 const upload = require("./Middleware/multer");
 const uploadApi = require("./Upload/Upload");
@@ -52,10 +53,14 @@ if (process.argv[2] == "--import") {
 }
 
 // Define routes ///
-
 const Route = express.Router();
+//User
 Route.post("/register", Auth.Register);
+
+//Resort
 Route.post("/addResort", Resort.addResort);
+// House & Villa
+Route.post("/addProperty", Property.addProperty);
 
 // Image Upload
 Route.post("/upload", upload.single("image"), uploadApi.uploadImage);

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const ResortSchema = new mongoose.Schema({
   name: {
@@ -60,10 +61,6 @@ const ResortSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  shuttleService: {
-    type: Boolean,
-    default: false,
-  },
   teenagersFacilities: {
     type: [String],
     required: true,
@@ -72,14 +69,35 @@ const ResortSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-
   imageUrl: {
     type: String,
-    required: [true, "image is missing"],
+    // required: [true, "image is missing"],
   },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  OwnerName: {
+    type: String,
+    required: true,
+  },
+  OwnerExperience: {
+    type: Number,
+    required: true,
+  },
+  OwnerEmail: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    validate: {
+      validator: validator.isEmail,
+      message: `This is not a valid email!`,
+    },
+  },
+  availability: {
+    type: Boolean,
+    default: true,
   },
 });
 

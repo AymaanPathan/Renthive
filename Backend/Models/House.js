@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const House_Villa_Schema = new mongoose.Schema({
   type: {
@@ -37,6 +38,9 @@ const House_Villa_Schema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  rating: {
+    type: Number,
+  },
   description: {
     type: String,
     trim: true,
@@ -49,27 +53,38 @@ const House_Villa_Schema = new mongoose.Schema({
     default: true,
   },
   features: {
-    pool: {
-      type: Boolean,
-      default: false,
-    },
-    garden: {
-      type: Boolean,
-      default: false,
-    },
-    parking: {
-      type: Boolean,
-      default: true,
-    },
+    type: [String],
+    default: [],
+  },
+  longitude: {
+    type: Number,
+    required: true,
+  },
+  latitude: {
+    type: Number,
+    required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+  OwnerName: {
+    type: String,
     required: true,
+  },
+  OwnerExperience: {
+    type: Number,
+    required: true,
+  },
+  OwnerEmail: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    validate: {
+      validator: validator.isEmail,
+      message: `This is not a valid email!`,
+    },
   },
 });
 

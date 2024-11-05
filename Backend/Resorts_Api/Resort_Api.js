@@ -15,11 +15,13 @@ exports.addResort = async (req, res) => {
       activities,
       rating,
       wheelchairAccessible,
-      shuttleService,
       teenagersFacilities,
       adultsFacilities,
-      seniorsFacilities,
       imageUrl,
+      availability,
+      OwnerName,
+      OwnerExperience,
+      OwnerEmail,
     } = req.body;
 
     const newResort = new Resort({
@@ -35,17 +37,17 @@ exports.addResort = async (req, res) => {
       activities,
       rating,
       wheelchairAccessible,
-      shuttleService,
       teenagersFacilities,
       adultsFacilities,
-      seniorsFacilities,
       imageUrl,
+      availability,
+      OwnerName,
+      OwnerExperience,
+      OwnerEmail,
     });
 
-    // Save the resort to the database
     await newResort.save();
 
-    // Respond with success
     res.status(201).json({
       message: "Resort added successfully!",
       resort: newResort,
