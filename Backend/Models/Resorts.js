@@ -79,15 +79,15 @@ const ResortSchema = new mongoose.Schema({
   },
   OwnerName: {
     type: String,
-    required: true,
+    required: [true, "Owner Name is Missing"],
   },
   OwnerExperience: {
     type: Number,
-    required: true,
+    required: [true, "Owner Exp is Missing"],
   },
   OwnerEmail: {
     type: String,
-    required: true,
+    required: [true, "Owner Email is Missing"],
     trim: true,
     lowercase: true,
     validate: {

@@ -15,12 +15,16 @@ function AddResort() {
   let [facilities, setFacilities] = useState([]);
   let [activities, setActivities] = useState([]);
   const [wheelchairAccessible, setWheelchairAccessible] = useState(false);
-  const [shuttleService, setShuttleService] = useState(false);
   let [teenagersFacilities, setTeenagersFacilities] = useState([]);
   let [adultsFacilities, setAdultsFacilities] = useState([]);
 
   const [imageUrl, setImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+
+  // Owner Details
+  const [ownerName, setOwnerName] = useState("");
+  const [ownerExperience, setOwnerExperience] = useState(0);
+  const [ownerEmail, setOwnerEmail] = useState("");
 
   // all array Inputs
   const [facilitiesInput, setFacilitiesInput] = useState("");
@@ -99,6 +103,10 @@ function AddResort() {
     }
   };
 
+  console.log(`${ownerName} +  ${typeof ownerName}`);
+  console.log(`${ownerExperience} +  ${typeof ownerExperience}`);
+  console.log(`${ownerEmail} +  ${typeof ownerEmail}`);
+
   const handleAddResort = async () => {
     if (
       !resortName ||
@@ -133,10 +141,11 @@ function AddResort() {
           facilities: facilities,
           activities: activities,
           wheelchairAccessible: wheelchairAccessible,
-          shuttleService: shuttleService,
           teenagersFacilities: teenagersFacilities,
           adultsFacilities: adultsFacilities,
-
+          OwnerName: ownerName,
+          OwnerExperience: ownerExperience,
+          OwnerEmail: ownerEmail,
           imageUrl: imageUrl,
         }),
       });
@@ -428,26 +437,6 @@ function AddResort() {
               />
             </div>
           </div>
-          <div className="Resort-shuttleService grid grid-cols-2 items-center gap-4">
-            <div>
-              <p className="font-semibold">Shuttle Service</p>
-              <span className="text-xs text-[#CDD1D7]">
-                Does the resort offer shuttle service?
-              </span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="shuttleService" className="text-gray-700">
-                Available
-              </label>
-              <input
-                id="shuttleService"
-                checked={shuttleService}
-                onChange={() => setShuttleService((prev) => !prev)}
-                type="checkbox"
-                className="cursor-pointer h-5 w-5 rounded-md outline-none"
-              />
-            </div>
-          </div>
           <div className="Resort-teenagersFacilities grid grid-cols-2 items-center gap-4">
             <div>
               <p className="font-semibold">Resort Teenagers Facilities</p>
@@ -512,6 +501,56 @@ function AddResort() {
                 type="text"
                 onKeyDown={handleAdultFacilities}
                 placeholder="Resort Adults Facilities Here"
+                className="bg-[#F2F4F7] h-10 px-4 rounded-md outline-none w-full"
+              />
+            </div>
+          </div>
+
+          <div className="Owner-name grid grid-cols-2 items-center gap-4">
+            <div>
+              <p className="font-semibold">Owner Name</p>
+              <span className="text-xs text-[#CDD1D7]">Enter a Owner Name</span>
+            </div>
+            <div>
+              <input
+                value={ownerName}
+                onChange={(e) => setOwnerName(e.target.value)}
+                type="text"
+                placeholder="Owner Name Here"
+                className="bg-[#F2F4F7] h-10 px-4 rounded-md outline-none w-full"
+              />
+            </div>
+          </div>
+          <div className="Owner-Experience grid grid-cols-2 items-center gap-4">
+            <div>
+              <p className="font-semibold">Owner Experience</p>
+              <span className="text-xs text-[#CDD1D7]">
+                Enter a Owner Experience
+              </span>
+            </div>
+            <div>
+              <input
+                value={ownerExperience}
+                onChange={(e) => setOwnerExperience(e.target.value)}
+                type="Number"
+                placeholder="Owner Experience Here"
+                className="bg-[#F2F4F7] h-10 px-4 rounded-md outline-none w-full"
+              />
+            </div>
+          </div>
+          <div className="Owner-Email grid grid-cols-2 items-center gap-4">
+            <div>
+              <p className="font-semibold">Owner Email</p>
+              <span className="text-xs text-[#CDD1D7]">
+                Enter a Owner Email
+              </span>
+            </div>
+            <div>
+              <input
+                value={ownerEmail}
+                onChange={(e) => setOwnerEmail(e.target.value)}
+                type="email"
+                placeholder="Owner Email Here"
                 className="bg-[#F2F4F7] h-10 px-4 rounded-md outline-none w-full"
               />
             </div>
