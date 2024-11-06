@@ -70,8 +70,8 @@ const ResortSchema = new mongoose.Schema({
     required: true,
   },
   imageUrl: {
-    type: String,
-    // required: [true, "image is missing"],
+    type: [String],
+    required: [true, "image is missing"],
   },
   createdAt: {
     type: Date,

@@ -63,7 +63,7 @@ Route.post("/addResort", Resort.addResort);
 Route.post("/addProperty", Property.addProperty);
 
 // Image Upload
-Route.post("/upload", upload.single("image"), uploadApi.uploadImage);
+Route.post("/upload", upload.array("image"), uploadApi.uploadImages);
 
 app.use(Route);
 

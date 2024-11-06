@@ -36,7 +36,7 @@ export function SidebarWithSearch() {
   };
 
   return (
-    <Card className="h-full w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="h-0 w-full max-w-[20rem]  shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 flex items-center gap-4 p-4">
         <img
           src="https://docs.material-tailwind.com/img/logo-ct-dark.png"

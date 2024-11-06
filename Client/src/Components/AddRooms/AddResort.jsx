@@ -18,23 +18,18 @@ function AddResort() {
   let [teenagersFacilities, setTeenagersFacilities] = useState([]);
   let [adultsFacilities, setAdultsFacilities] = useState([]);
 
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Owner Details
   const [ownerName, setOwnerName] = useState("");
   const [ownerExperience, setOwnerExperience] = useState(0);
   const [ownerEmail, setOwnerEmail] = useState("");
-
-  // all array Inputs
   const [facilitiesInput, setFacilitiesInput] = useState("");
   const [activitiesInput, setActivitiesInput] = useState("");
   const [teenagersFacilitiesInput, setTeenagersFacilitiesInput] = useState("");
   const [adultsFacilitiesInput, setAdultsFacilitiesInput] = useState("");
 
-  console.log(adultsFacilities);
-
-  // Adding Array Values in Facilities
   const handleFacilities = (e) => {
     if (facilitiesInput.trim() === "") {
       return;
@@ -77,32 +72,52 @@ function AddResort() {
 
   // Upload Image
   const uploadImage = async () => {
-    toast.loading("Uploading File Please Wait...");
-    if (!selectedFile) {
+    toast.loading("Uploading File, Please Wait...");
+
+    // Ensure a file is selected
+    if (!selectedFile || selectedFile.length === 0) {
       toast.dismiss();
-      return toast.error("Please Upload Resort Image ");
+      return toast.error("Please Upload Resort Image");
     }
+
+    // Create FormData object
     const formData = new FormData();
-    formData.append("image", selectedFile);
+    Array.from(selectedFile).forEach((file) => {
+      formData.append("image", file);
+    });
+
     try {
       const response = await fetch("http://localhost:3000/upload", {
         method: "POST",
         body: formData,
       });
-      const data = await response.json();
-      if (response.ok) {
+
+      // Check for a successful response
+      if (!response.ok) {
         toast.dismiss();
-        toast.success("File Uploaded Successfully!");
-        setImageUrl(data.imageUrl);
+        return toast.error("Failed to upload image. Please try again later.");
+      }
+
+      const data = await response.json();
+
+      // Handle successful response with multiple image URLs
+      if (data.Status === "Success" && data.imageUrls) {
+        setImageUrl(data.imageUrls); // Update the state with the array of image URLs
+        toast.dismiss();
+        toast.success("Files Uploaded Successfully!");
       } else {
         toast.dismiss();
-        toast.error("Please Try Again Later");
+        toast.error("Invalid response format");
       }
     } catch (error) {
       toast.dismiss();
-      toast.error("Internal Server Error For Image Uploading");
-      console.log(error);
+      console.error("Upload error:", error);
+      toast.error("Internal Server Error During Image Upload");
     }
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files);
   };
 
   const handleAddResort = async () => {
@@ -355,22 +370,23 @@ function AddResort() {
               </span>
             </div>
             <div>
-              <div className="flex justify-start gap-2 mb-2">
+              <div className="grid grid-cols-4 justify-between items-center w-full gap-2 mb-2 ">
                 {facilities.map((item, index) => (
                   <div
                     key={index}
-                    className="border flex justify-between items-center gap-3 px-2 py-2 text-black rounded-md"
+                    className="flex border relative  h-12 w-full justify-center   items-center gap-3  text-black rounded-md"
                   >
-                    <p>{item}</p>
+                    <p className="text-xs  text-nowrap">{item}</p>
                     <img
                       onClick={(e) => removefacility(e)}
                       src={cross}
                       alt={item}
-                      className="w-3 h-3 cursor-pointer"
+                      className="w-2 h-2 top-1 right-1 absolute cursor-pointer"
                     />
                   </div>
                 ))}
               </div>
+
               <input
                 value={facilitiesInput}
                 onChange={(e) => setFacilitiesInput(e.target.value)}
@@ -389,18 +405,18 @@ function AddResort() {
               </span>
             </div>
             <div>
-              <div className="flex justify-start gap-2 mb-2">
+              <div className="grid grid-cols-4 justify-between items-center w-full gap-2 mb-2 ">
                 {activities.map((item, index) => (
                   <div
                     key={index}
-                    className="border flex justify-between items-center gap-3 px-2 py-2 text-black rounded-md"
+                    className="flex border relative  h-12 w-full justify-center   items-center gap-3  text-black rounded-md"
                   >
-                    <p>{item}</p>
+                    <p className="text-xs  text-nowrap">{item}</p>
                     <img
                       onClick={(e) => removeActivity(e)}
                       src={cross}
                       alt={item}
-                      className="w-3 h-3 cursor-pointer"
+                      className="w-2 h-2 top-1 right-1 absolute cursor-pointer"
                     />
                   </div>
                 ))}
@@ -443,18 +459,18 @@ function AddResort() {
               </span>
             </div>
             <div>
-              <div className="flex justify-start gap-2 mb-2">
+              <div className="grid grid-cols-4 justify-between items-center w-full gap-2 mb-2 ">
                 {teenagersFacilities.map((item, index) => (
                   <div
                     key={index}
-                    className="border flex justify-between items-center gap-3 px-2 py-2 text-black rounded-md"
+                    className="flex border relative  h-12 w-full justify-center   items-center gap-3  text-black rounded-md"
                   >
-                    <p>{item}</p>
+                    <p className="text-xs  text-nowrap">{item}</p>
                     <img
                       onClick={(e) => removeTeenagersFacilities(e)}
                       src={cross}
                       alt={item}
-                      className="w-3 h-3 cursor-pointer"
+                      className="w-2 h-2 top-1 right-1 absolute cursor-pointer"
                     />
                   </div>
                 ))}
@@ -477,18 +493,18 @@ function AddResort() {
               </span>
             </div>
             <div>
-              <div className="flex justify-start gap-2 mb-2">
+              <div className="grid grid-cols-4 justify-between items-center w-full gap-2 mb-2 ">
                 {adultsFacilities.map((item, index) => (
                   <div
                     key={index}
-                    className="border flex justify-between items-center gap-3 px-2 py-2 text-black rounded-md"
+                    className="flex border relative  h-12 w-full justify-center   items-center gap-3  text-black rounded-md"
                   >
-                    <p>{item}</p>
+                    <p className="text-xs  text-nowrap">{item}</p>
                     <img
                       onClick={(e) => removeAdultFacilities(e)}
                       src={cross}
                       alt={item}
-                      className="w-3 h-3 cursor-pointer"
+                      className="w-2 h-2 top-1 right-1 absolute cursor-pointer"
                     />
                   </div>
                 ))}
@@ -564,7 +580,8 @@ function AddResort() {
             <div className="flex flex-col">
               <input
                 type="file"
-                onChange={(e) => setSelectedFile(e.target.files[0])}
+                multiple
+                onChange={handleFileChange}
                 className="bg-[#F2F4F7] h-10 px-4 rounded-md outline-none w-full"
               />
               <button
