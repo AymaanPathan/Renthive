@@ -59,6 +59,7 @@ Route.post("/register", Auth.Register);
 
 //Resort
 Route.post("/addResort", Resort.addResort);
+Route.get("/getAllResorts", Resort.getAllResort);
 // House & Villa
 Route.post("/addProperty", Property.addProperty);
 

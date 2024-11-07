@@ -6,6 +6,7 @@ import Register from "./Components/Register/Register";
 import Profile from "./Components/Profile/Profile";
 import AddResort from "./Components/AddRooms/AddResort";
 import AddHouse from "./Components/AddHouse/AddHouse";
+import AllProperty from "./Components/PropertyListing/AllProperty";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard/addResort" element={<AddResort />} />
         <Route path="/dashboard/addHouse" element={<AddHouse />} />
+        <Route path="/All-Property" element={<AllProperty />} />
       </Routes>
     </main>
   );

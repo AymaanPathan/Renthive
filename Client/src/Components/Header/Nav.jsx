@@ -1,21 +1,18 @@
 import logo from "../../assets/Renthive.png";
-import { useAuth0 } from "@auth0/auth0-react";
 
-import LoginButton from "../LoginAuth0/Login";
-import LogoutButton from "../Logout/Logout";
-import RegisterButton from "../Register/Register";
-import Profile from "../Profile/Profile";
+import { Link } from "react-router-dom";
 function Nav() {
-  const { user, isAuthenticated } = useAuth0();
   return (
     <div className="flex items-center justify-between px-4">
       <ul className="flex items-center justify-between gap-6">
         <li className="w-28 h-28">
           <img src={logo} alt="logo" />
         </li>
-        <li className="hover:text-gray-600 text-gray-500 cursor-pointer">
-          Property Listing
-        </li>
+        <Link to={"/All-Property"}>
+          <li className="hover:text-gray-600 text-gray-500 cursor-pointer">
+            Property Listing
+          </li>
+        </Link>
         <li className="hover:text-gray-600 text-gray-500  cursor-pointer">
           Contact Us
         </li>
@@ -40,21 +37,6 @@ function Nav() {
           placeholder="What are you looking for?"
         />
       </div>
-
-      <ul className="flex items-center gap-2 ">
-        {isAuthenticated ? (
-          <Profile />
-        ) : (
-          <>
-            <li className="px-6 py-2 bg-orange-500 cursor-pointer rounded-full text-white hover:brightness-110 duration-200">
-              <LoginButton />
-            </li>
-            <li className="px-6 py-2 bg-orange-400 cursor-pointer rounded-full text-gray-100  hover:brightness-125 duration-200">
-              <RegisterButton />
-            </li>{" "}
-          </>
-        )}
-      </ul>
     </div>
   );
 }

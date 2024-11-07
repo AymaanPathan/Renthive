@@ -80,7 +80,6 @@ function AddResort() {
       return toast.error("Please Upload Resort Image");
     }
 
-    // Create FormData object
     const formData = new FormData();
     Array.from(selectedFile).forEach((file) => {
       formData.append("image", file);

@@ -60,3 +60,27 @@ exports.addResort = async (req, res) => {
     });
   }
 };
+
+exports.getAllResort = async (req, res) => {
+  try {
+    const getResorts = await Resort.find();
+    if (!getResorts) {
+      return res.status(400).json({
+        Status: "Failed",
+        Message: "No Data Found",
+      });
+    }
+    res.status(200).json({
+      Status: "Success",
+      Length: getResorts.length,
+      Data: getResorts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Error",
+      message: "An error occurred while retrieving resorts",
+      error: error.message,
+    });
+  }
+};
