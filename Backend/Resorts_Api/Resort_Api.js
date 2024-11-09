@@ -78,9 +78,22 @@ exports.getAllResort = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      status: "Error",
-      message: "An error occurred while retrieving resorts",
-      error: error.message,
+      Status: "Failed",
+      Message: "Internal Server Error",
     });
+  }
+};
+
+exports.getResortByName = async (req, res) => {
+  const { name } = req.params;
+  try {
+    const resort = await Resort.findOne({ name });
+    if (resort) {
+      res.status(200).json(resort);
+    } else {
+      res.status(404).json({ message: "Resort not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
 };
