@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 function ResortListing() {
   const [allData, setAllData] = useState([]);
@@ -91,9 +92,11 @@ function ResortListing() {
                     </p>
                   </div>
                 </div>
-                <button className="mt-4 px-4 py-2 text-white bg-[#E08F71] rounded-full hover:bg-[#d07a5b] transition-colors">
-                  View Resort
-                </button>
+                <Link to={`/getResort/${resort._id}`}>
+                  <button className="mt-4 px-4 py-2 text-white bg-[#E08F71] rounded-full hover:bg-[#d07a5b] transition-colors">
+                    View Resort
+                  </button>
+                </Link>
               </div>
             </div>
           ))}

@@ -11,7 +11,7 @@ const uploadApi = require("./Upload/Upload");
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
   })
 );
 
@@ -56,11 +56,12 @@ if (process.argv[2] == "--import") {
 const Route = express.Router();
 //User
 Route.post("/register", Auth.Register);
+Route.post("/login", Auth.Login);
 
 //Resort
 Route.post("/addResort", Resort.addResort);
 Route.get("/getAllResorts", Resort.getAllResort);
-Route.get("/getResort/:name", Resort.getResortByName);
+Route.get("/getResort/:_id", Resort.getResortByName);
 // House & Villa
 Route.post("/addProperty", Property.addProperty);
 
