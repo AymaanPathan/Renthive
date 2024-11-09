@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+
 import Nav from "../Header/Nav";
 
 function SingleResortPage() {
@@ -75,9 +75,11 @@ function SingleResortPage() {
             <span className="text-lg text-gray-600">/ night</span>
           </div>
 
-          <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-300">
-            Book Now
-          </button>
+          <Link to={"/Book-resort"}>
+            <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-300">
+              Book Now
+            </button>
+          </Link>
         </div>
       </div>
     </div>
