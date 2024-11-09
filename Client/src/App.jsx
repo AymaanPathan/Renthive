@@ -8,7 +8,7 @@ import AddResort from "./Components/AddRooms/AddResort";
 import AddHouse from "./Components/AddHouse/AddHouse";
 import AllProperty from "./Components/PropertyListing/AllProperty";
 import SingleResortPage from "./Components/Single_Resort/SingleResort";
-import BookingForm from "./Components/Book_Resort/BookingForm";
+import BookingForm from "./Components/Book_Resort/BookingMain/BookingForm";
 
 export default function App() {
   return (

@@ -1,21 +1,8 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { PageBtnContext } from "../Context/pageBtnContext";
 
 function Progress() {
-  const [page, setPage] = useState(0);
-  const [width, setWidth] = useState(1);
-  // 16
-  // 48
-  // full
-
-  const handlePage = () => {
-    if (page <= 2) {
-      // this is beacuse even though the page is on 2 it will it will increment to 3 cause 2 is <== 2
-      setPage((prev) => prev + 1);
-      setWidth(width + (page + 23));
-    }
-  };
-
-  console.log(`Page is ${page} and width is ${width} `);
+  const { width } = useContext(PageBtnContext);
 
   return (
     <div className="max-w-xs mx-auto">
@@ -23,13 +10,15 @@ function Progress() {
 
       <div>
         <div className="overflow-hidden rounded-full bg-gray-200 h-1">
-          <div className={`h-1 w-${width} rounded-full bg-[#F65730]`}></div>
+          <div
+            style={{ width: `${width}%` }} // Using dynamic width as percentage
+            className="h-1 rounded-full bg-[#F65730]"
+          ></div>
         </div>
 
         <ol className="mt-3 grid grid-cols-3 text-xs font-medium text-gray-500">
           <li className="flex items-center justify-start text-gray-500 gap-1">
             <span className="hidden sm:inline"> Details </span>
-
             <svg
               className="w-4 h-4"
               xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +37,6 @@ function Progress() {
 
           <li className="flex items-center justify-center text-gray-500 gap-1">
             <span className="hidden sm:inline"> Duration </span>
-
             <svg
               className="w-4 h-4"
               xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +60,6 @@ function Progress() {
 
           <li className="flex items-center justify-end gap-1">
             <span className="hidden sm:inline"> Payment </span>
-
             <svg
               className="w-4 h-4"
               xmlns="http://www.w3.org/2000/svg"
@@ -90,12 +77,6 @@ function Progress() {
           </li>
         </ol>
       </div>
-      <button
-        onClick={handlePage}
-        className="mt-6 cursor-pointer p-3 bg-blue-500 text-white rounded-2xl active:scale-95"
-      >
-        Next Step
-      </button>
     </div>
   );
 }
