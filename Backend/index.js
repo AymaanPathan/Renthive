@@ -7,6 +7,7 @@ const Property = require("./House_Villa_Api/House_Villa_Api");
 const app = express();
 const upload = require("./Middleware/multer");
 const uploadApi = require("./Upload/Upload");
+const Sms = require("./SMS/Sms");
 
 app.use(express.json());
 app.use(
@@ -67,6 +68,12 @@ Route.post("/addProperty", Property.addProperty);
 
 // Image Upload
 Route.post("/upload", upload.array("image"), uploadApi.uploadImages);
+
+// Otp Route
+//Send Otp
+Route.post("/sendOtp", Sms.SendOtp);
+// Verify Otp
+Route.post("/checkOtp", Sms.verifyOtp);
 
 app.use(Route);
 

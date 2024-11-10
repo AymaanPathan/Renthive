@@ -5,27 +5,29 @@ function Progress() {
   const { width } = useContext(PageBtnContext);
 
   return (
-    <div className="max-w-xs mx-auto">
+    <div className="max-w-md mx-auto">
       <h2 className="sr-only">Steps</h2>
 
       <div>
-        <div className="overflow-hidden rounded-full bg-gray-200 h-1">
+        {/* Progress Bar */}
+        <div className="overflow-hidden rounded-full bg-gray-200 h-2">
           <div
-            style={{ width: `${width}%` }} // Using dynamic width as percentage
-            className="h-1 ease-in-out duration-700 rounded-full bg-[#F65730]"
+            style={{ width: `${width}%` }}
+            className="h-2 ease-in-out duration-700 rounded-full bg-[#F65730]"
           ></div>
         </div>
 
-        <ol className="mt-3 grid grid-cols-3 text-xs font-medium text-gray-500">
-          <li className="flex items-center justify-start text-gray-500 gap-1">
+        {/* Steps Indicators */}
+        <ol className="mt-4 grid grid-cols-3 text-sm font-semibold text-gray-600">
+          <li className="flex items-center justify-start text-gray-600 gap-2">
             <span className="hidden sm:inline"> Details </span>
             <svg
-              className="w-4 h-4"
+              className="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="#F65730"
-              strokeWidth="2"
+              strokeWidth="2.5"
             >
               <path
                 strokeLinecap="round"
@@ -35,15 +37,15 @@ function Progress() {
             </svg>
           </li>
 
-          <li className="flex items-center justify-center text-gray-500 gap-1">
+          <li className="flex items-center justify-center text-gray-600 gap-2">
             <span className="hidden sm:inline"> Duration </span>
             <svg
-              className="w-4 h-4"
+              className="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="#F65730"
-              strokeWidth="2"
+              strokeWidth="2.5"
             >
               <path
                 strokeLinecap="round"
@@ -58,15 +60,15 @@ function Progress() {
             </svg>
           </li>
 
-          <li className="flex items-center justify-end gap-1">
+          <li className="flex items-center justify-end text-gray-600 gap-2">
             <span className="hidden sm:inline"> Payment </span>
             <svg
-              className="w-4 h-4"
+              className="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="#F65730"
-              strokeWidth="2"
+              strokeWidth="2.5"
             >
               <path
                 strokeLinecap="round"

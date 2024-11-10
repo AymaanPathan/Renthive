@@ -1,11 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { PageBtnContext } from "../../Context/pageBtnContext";
 
-const Duration = () => {
+const Duration = ({ duration, setDuration }) => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [duration, setDuration] = useState(0);
   const today = new Date().toISOString().split("T")[0];
   const { handlePage } = useContext(PageBtnContext);
 
@@ -13,11 +13,22 @@ const Duration = () => {
     if (!from || !to) {
       return toast.error("Please Select both dates!");
     }
+    if (fromDate > toDate) {
+      return toast.error("Please Select Valid Dates");
+    }
     const startDate = new Date(from);
     const endDate = new Date(to);
     const differentBetween = endDate - startDate;
     const days = Math.floor(differentBetween / (1000 * 60 * 60 * 24));
     setDuration(days);
+  };
+
+  const handleNextPage = (e) => {
+    if (fromDate > toDate) {
+      return toast.error("Please Select Valid Dates");
+    }
+    handleDays(fromDate, toDate);
+    handlePage(e);
   };
 
   const handleFromDateChange = (e) => {
@@ -72,7 +83,7 @@ const Duration = () => {
           See Duration
         </button>
         <button
-          onClick={handlePage}
+          onClick={handleNextPage}
           className="w-full hover:bg-slate-400 hover:text-white ease-in-out duration-500 active:scale-95 text-gray-500 py-3 rounded-lg shadow-lg ac"
         >
           Next step

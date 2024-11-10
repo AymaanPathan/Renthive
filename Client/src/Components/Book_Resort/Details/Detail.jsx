@@ -1,20 +1,54 @@
+/* eslint-disable react/prop-types */
 import { useContext } from "react";
 import { PageBtnContext } from "../../Context/pageBtnContext";
+import toast from "react-hot-toast";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import "./PhoneInputCustom.css"; // Custom CSS file to override default PhoneInput styles
 
-function Detail() {
+function Detail({
+  email,
+  userFirstName,
+  setUserFirstName,
+  userLastName,
+  setUserLastName,
+  userPhoneNumber,
+  setPhoneUserNumber,
+  NoOfguest,
+  setNoOfGuest,
+}) {
   const { handlePage } = useContext(PageBtnContext);
+
+  const handleNextPage = (e) => {
+    if (
+      !email ||
+      !userFirstName ||
+      !userLastName ||
+      !userPhoneNumber ||
+      !NoOfguest
+    ) {
+      return toast.error("Please Provide All Information");
+    }
+    if (NoOfguest > 20) {
+      return toast.error("Max guest allowed is 20");
+    }
+    handlePage(e);
+  };
+
   return (
-    <form className="w-full max-w-lg">
-      <div className="flex flex-wrap -mx-3 mb-6">
+    <form className="w-full max-w-lg mx-auto">
+      <div className="flex flex-wrap -mx-3 mb-3">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
             First Name
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            value={userFirstName}
+            onChange={(e) => setUserFirstName(e.target.value)}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="grid-first-name"
             type="text"
-            placeholder="Jane"
+            placeholder="Your First Name"
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
@@ -22,80 +56,68 @@ function Detail() {
             Last Name
           </label>
           <input
+            value={userLastName}
+            onChange={(e) => setUserLastName(e.target.value)}
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="grid-last-name"
             type="text"
-            placeholder="Doe"
+            placeholder="Your Last Name"
           />
         </div>
       </div>
+
+      <div className="flex flex-wrap -mx-3 mb-3">
+        <div className="w-full px-3">
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            Email
+          </label>
+          <input
+            className="appearance-none block w-full cursor-not-allowed text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="grid-password"
+            type="email"
+            readOnly
+            placeholder={email}
+          />
+        </div>
+      </div>
+
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            Password
+            Phone Number
+          </label>
+          <PhoneInput
+            className="number"
+            country={"in"}
+            containerClass="phone-input-container"
+            inputClass="phone-input-field"
+            value={userPhoneNumber}
+            onChange={(e) => setPhoneUserNumber(e)}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 ">
+        <div className="w-full px-3">
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            No. Of Guests
           </label>
           <input
+            value={NoOfguest}
+            onChange={(e) => setNoOfGuest(Number(e.target.value))}
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-password"
-            type="password"
-            placeholder="******************"
-          />
-          <p className="text-gray-600 text-xs italic">
-            Make it as long and as crazy as you&#39;d like
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-2">
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            City
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-city"
-            type="text"
-            placeholder="Albuquerque"
-          />
-        </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            State
-          </label>
-          <div className="relative">
-            <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-state"
-            >
-              <option>New Mexico</option>
-              <option>Missouri</option>
-              <option>Texas</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            Zip
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="grid-zip"
-            type="text"
-            placeholder="90210"
+            id="grid-guests"
+            type="number"
+            max={20}
+            placeholder="No. Of Guests"
           />
         </div>
       </div>
+
       <button
-        onClick={handlePage}
-        className="w-full bg-[#F65730] mt-6 border text-lg  hover:text-white active:scale-90 ease-in-out duration-500  text-gray-200 py-3 rounded-lg shadow-lg ac"
+        type="button"
+        onClick={handleNextPage}
+        className="w-full bg-[#F65730] mt-2 border text-lg hover:text-white active:scale-90 ease-in-out duration-500 text-gray-200 py-3 rounded-lg shadow-lg"
       >
         Next step
       </button>

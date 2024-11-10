@@ -5,11 +5,52 @@ import Duration from "../Duration/Duration";
 import { useContext, useState, useEffect } from "react";
 import { PageBtnContext } from "../../Context/pageBtnContext";
 import Payment from "../Payment/Payment";
+import toast from "react-hot-toast";
 
 function BookingForm() {
   const { page } = useContext(PageBtnContext);
   const resort_Id = localStorage.getItem("resort_id");
   const [resort, setResort] = useState(null);
+  const userEmail = localStorage.getItem("email");
+  const [bookingData, setBookingData] = useState(null);
+  const [duration, setDuration] = useState(0);
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("");
+  const [noOfGuest, setNoOfGuest] = useState(null);
+
+  const updateData = () => {
+    if (!userFirstName) {
+      return toast.error("Please Provide First Name");
+    }
+    if (!userLastName) {
+      return toast.error("Please Provide Last Name");
+    }
+    if (!userEmail) {
+      return toast.error("Please Login To Book Resort");
+    }
+    if (!duration || duration < 1) {
+      return toast.error("Please Provide Valid Duration");
+    }
+    if (!noOfGuest) {
+      return toast.error("Please Provide Number Of Guests");
+    }
+    if (noOfGuest > 20) {
+      return toast.error("Max guest allowed is 20");
+    }
+    setBookingData(() => ({
+      firstName: userFirstName,
+      LastName: userLastName,
+      phone: userPhoneNumber.slice(2),
+      email: userEmail,
+      duration: duration,
+      totalGuest: noOfGuest,
+      resortName: resort.name,
+      resortId: resort_Id,
+    }));
+  };
+
+  console.log(bookingData);
 
   useEffect(() => {
     const fetchResort = async () => {
@@ -30,6 +71,8 @@ function BookingForm() {
     fetchResort();
   }, [resort_Id]);
 
+  console.log(typeof noOfGuest);
+
   return (
     <div className="mt-6 p-4">
       <div className="flex items-center justify-between mx-4 mb-4">
@@ -45,10 +88,26 @@ function BookingForm() {
       </div>
 
       <div className="flex">
-        <div className="w-1/3 bg-gray-50 p-6 rounded-lg shadow-lg mr-4">
+        <div className="w-1/3  p-6 rounded-lg mr-4">
           <Progress />
           <div className="mt-8">
-            {page === 0 ? <Detail /> : page === 1 ? <Duration /> : <Payment />}
+            {page === 0 ? (
+              <Detail
+                email={userEmail}
+                userFirstName={userFirstName}
+                setUserFirstName={setUserFirstName}
+                userLastName={userLastName}
+                setUserLastName={setUserLastName}
+                userPhoneNumber={userPhoneNumber}
+                setPhoneUserNumber={setUserPhoneNumber}
+                NoOfguest={noOfGuest}
+                setNoOfGuest={setNoOfGuest}
+              />
+            ) : page === 1 ? (
+              <Duration duration={duration} setDuration={setDuration} />
+            ) : (
+              <Payment />
+            )}
           </div>
         </div>
 
@@ -73,6 +132,7 @@ function BookingForm() {
           )}
         </div>
       </div>
+      <button onClick={updateData}>Booking data</button>
     </div>
   );
 }
