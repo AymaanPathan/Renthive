@@ -84,7 +84,7 @@ exports.getAllResort = async (req, res) => {
   }
 };
 
-exports.getResortByName = async (req, res) => {
+exports.getResortById = async (req, res) => {
   const { _id } = req.params;
   try {
     const resort = await Resort.findOne({ _id });

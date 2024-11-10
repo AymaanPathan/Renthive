@@ -12,7 +12,7 @@ function Progress() {
         <div className="overflow-hidden rounded-full bg-gray-200 h-1">
           <div
             style={{ width: `${width}%` }} // Using dynamic width as percentage
-            className="h-1 rounded-full bg-[#F65730]"
+            className="h-1 ease-in-out duration-700 rounded-full bg-[#F65730]"
           ></div>
         </div>
 

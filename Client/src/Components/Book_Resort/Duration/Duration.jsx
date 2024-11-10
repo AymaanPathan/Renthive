@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { PageBtnContext } from "../../Context/pageBtnContext";
 
 const Duration = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [duration, setDuration] = useState(0);
+  const today = new Date().toISOString().split("T")[0];
+  const { handlePage } = useContext(PageBtnContext);
 
   const handleDays = (from, to) => {
     if (!from || !to) {
@@ -28,7 +31,7 @@ const Duration = () => {
   };
 
   return (
-    <div className="p-6  rounded-lg w-full max-w-md mx-auto mt-10 text-white">
+    <div className="rounded-lg w-full max-w-md mx-auto  text-white">
       <h2 className="text-2xl font-semibold mb-6 text-gray-500">
         Select Date Range
       </h2>
@@ -36,6 +39,7 @@ const Duration = () => {
       <div className="mb-6">
         <label className="block text-lg text-gray-500 font-medium">From:</label>
         <input
+          min={today}
           type="date"
           value={fromDate}
           onChange={handleFromDateChange}
@@ -46,6 +50,7 @@ const Duration = () => {
       <div className="mb-6">
         <label className="block text-lg font-medium text-gray-500">To:</label>
         <input
+          min={today}
           type="date"
           value={toDate}
           onChange={handleToDateChange}
@@ -67,7 +72,7 @@ const Duration = () => {
           See Duration
         </button>
         <button
-          onClick={() => handleDays(fromDate, toDate)}
+          onClick={handlePage}
           className="w-full hover:bg-slate-400 hover:text-white ease-in-out duration-500 active:scale-95 text-gray-500 py-3 rounded-lg shadow-lg ac"
         >
           Next step

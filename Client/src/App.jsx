@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/dashboard/addHouse" element={<AddHouse />} />
         <Route path="/All-Property" element={<AllProperty />} />
         <Route path="/getResort/:_id" element={<SingleResortPage />} />
-        <Route path="/Book-resort" element={<BookingForm />} />
+        <Route path="/Book-resort/" element={<BookingForm />} />
       </Routes>
     </main>
   );

@@ -95,7 +95,7 @@ function Detail() {
       </div>
       <button
         onClick={handlePage}
-        className="w-full mt-6 hover:bg-slate-400 hover:text-white ease-in-out duration-500 active:scale-95 text-gray-500 py-3 rounded-lg shadow-lg ac"
+        className="w-full bg-[#F65730] mt-6 border text-lg  hover:text-white active:scale-90 ease-in-out duration-500  text-gray-200 py-3 rounded-lg shadow-lg ac"
       >
         Next step
       </button>

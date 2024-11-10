@@ -35,6 +35,8 @@ function SingleResortPage() {
     return <p>Resort not found.</p>;
   }
 
+  localStorage.setItem("resort_id", _id);
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       <Nav />
