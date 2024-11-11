@@ -1,9 +1,3 @@
-const twilio = require("twilio");
-
-const generateOtp = () => {
-  return Math.floor(100000 + Math.random() * 9000000);
-};
-
 exports.SendOtp = async (req, res) => {
   const { number } = req.body;
   const accountSid = "AC2e94c478aa882f36ead80107639a0ee5";

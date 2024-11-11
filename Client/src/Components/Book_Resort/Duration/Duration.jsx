@@ -80,7 +80,7 @@ const Duration = ({ duration, setDuration }) => {
           onClick={() => handleDays(fromDate, toDate)}
           className="w-full bg-[#F88164] active:scale-95 text-white py-3 rounded-lg shadow-lg ac"
         >
-          See Duration
+          Confirm Duration
         </button>
         <button
           onClick={handleNextPage}
