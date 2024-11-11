@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PageBtnContext } from "../../Context/pageBtnContext";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import "./PhoneInputCustom.css"; // Custom CSS file to override default PhoneInput styles
+import "./PhoneInputCustom.css";
 
 function Detail({
   email,
@@ -20,6 +20,8 @@ function Detail({
   setPhoneOtp,
 }) {
   const { handlePage } = useContext(PageBtnContext);
+  const [sendingOtp, setSendingOtp] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const handleNextPage = (e) => {
     if (
@@ -38,7 +40,11 @@ function Detail({
   };
 
   const handleSendOtp = async () => {
-    toast.loading("Sending Otp...");
+    setSendingOtp(true);
+
+    if (sendingOtp) return;
+    toast.loading("Sending OTP...");
+
     try {
       const response = await fetch("http://localhost:3000/sendOtp", {
         method: "POST",
@@ -49,25 +55,49 @@ function Detail({
       toast.dismiss();
 
       if (!response.ok) {
-        // Handle specific error messages from the server
-        if (response.status === 500) {
-          toast.error("Internal server error. Please try again later.");
-        } else if (response.status === 400) {
-          const errorData = await response.json();
-          toast.error(errorData.error || "Failed to send OTP.");
-        } else {
-          toast.error("Unexpected error. Please try again.");
-        }
+        const errorData = await response.json();
+        toast.error(
+          response.status === 500
+            ? "Internal server error. Please try again later."
+            : errorData.error || "Failed to send OTP."
+        );
         return;
       }
 
       const data = await response.json();
-      console.log(data);
-      toast.success(`Otp sent to ${userPhoneNumber}`);
+      toast.success(`${data.message} OTP sent to ${userPhoneNumber}`);
     } catch (error) {
-      toast.dismiss();
       console.error("Error sending OTP:", error);
       toast.error("Network error or server is unavailable.");
+    } finally {
+      setSendingOtp(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    setIsVerifying(true);
+    if (isVerifying) return;
+    toast.loading("Checking Otp...");
+    try {
+      const response = await fetch("http://localhost:3000/verifyOtp", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ number: `+${userPhoneNumber}`, code: phoneOtp }),
+      });
+      if (response.ok) {
+        toast.dismiss();
+        const data = await response.json();
+        toast.success(data.message);
+      } else {
+        toast.dismiss();
+        const error = await response.json();
+        toast.error(error.error);
+      }
+    } catch (err) {
+      toast.dismiss();
+      toast.error(err || "Internal Server Error");
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -133,9 +163,12 @@ function Detail({
           <button
             onClick={handleSendOtp}
             type="button"
-            className="w-full bg-gray-200 p-2 text-gray-600 shadow-md hover:bg-gray-300 duration-500 "
+            disabled={sendingOtp}
+            className={`w-full bg-gray-200 p-2 text-gray-600 shadow-md ${
+              sendingOtp ? "cursor-not-allowed opacity-50" : "hover:bg-gray-300"
+            } duration-500`}
           >
-            Send Otp
+            {sendingOtp ? "Sending..." : "Send OTP"}
           </button>
         </div>
       </div>
@@ -148,14 +181,16 @@ function Detail({
             <input
               value={phoneOtp}
               className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              onChange={(e) => setPhoneOtp(e.target.value)}
+              onChange={(e) => setPhoneOtp(Number(e.target.value))}
               placeholder="Enter Otp"
             />
             <button
+              onClick={verifyOtp}
               type="button"
+              disabled={isVerifying}
               className="p-2 bg-orange-500 text-white rounded-md active:scale-90 "
             >
-              Verify Otp
+              {`${isVerifying ? "Checking..." : "Verify Otp"}`}
             </button>
           </div>
         </div>

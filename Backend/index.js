@@ -73,7 +73,7 @@ Route.post("/upload", upload.array("image"), uploadApi.uploadImages);
 //Send Otp
 Route.post("/sendOtp", Sms.SendOtp);
 // Verify Otp
-Route.post("/checkOtp", Sms.verifyOtp);
+Route.post("/verifyOtp", Sms.verifyOtp);
 
 app.use(Route);
 
