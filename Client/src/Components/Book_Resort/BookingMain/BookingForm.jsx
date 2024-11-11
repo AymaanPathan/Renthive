@@ -18,6 +18,7 @@ function BookingForm() {
   const [userLastName, setUserLastName] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
   const [noOfGuest, setNoOfGuest] = useState(null);
+  const [phoneOtp, setPhoneOtp] = useState(null);
 
   const updateData = () => {
     if (!userFirstName) {
@@ -41,7 +42,7 @@ function BookingForm() {
     setBookingData(() => ({
       firstName: userFirstName,
       LastName: userLastName,
-      phone: userPhoneNumber.slice(2),
+      phone: userPhoneNumber,
       email: userEmail,
       duration: duration,
       totalGuest: noOfGuest,
@@ -49,8 +50,6 @@ function BookingForm() {
       resortId: resort_Id,
     }));
   };
-
-  console.log(bookingData);
 
   useEffect(() => {
     const fetchResort = async () => {
@@ -70,8 +69,6 @@ function BookingForm() {
     };
     fetchResort();
   }, [resort_Id]);
-
-  console.log(typeof noOfGuest);
 
   return (
     <div className="mt-6 p-4">
@@ -102,6 +99,8 @@ function BookingForm() {
                 setPhoneUserNumber={setUserPhoneNumber}
                 NoOfguest={noOfGuest}
                 setNoOfGuest={setNoOfGuest}
+                phoneOtp={phoneOtp}
+                setPhoneOtp={setPhoneOtp}
               />
             ) : page === 1 ? (
               <Duration duration={duration} setDuration={setDuration} />

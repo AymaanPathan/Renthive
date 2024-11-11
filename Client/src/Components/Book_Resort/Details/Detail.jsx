@@ -16,6 +16,8 @@ function Detail({
   setPhoneUserNumber,
   NoOfguest,
   setNoOfGuest,
+  phoneOtp,
+  setPhoneOtp,
 }) {
   const { handlePage } = useContext(PageBtnContext);
 
@@ -33,6 +35,40 @@ function Detail({
       return toast.error("Max guest allowed is 20");
     }
     handlePage(e);
+  };
+
+  const handleSendOtp = async () => {
+    toast.loading("Sending Otp...");
+    try {
+      const response = await fetch("http://localhost:3000/sendOtp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ number: `+${userPhoneNumber}` }),
+      });
+
+      toast.dismiss();
+
+      if (!response.ok) {
+        // Handle specific error messages from the server
+        if (response.status === 500) {
+          toast.error("Internal server error. Please try again later.");
+        } else if (response.status === 400) {
+          const errorData = await response.json();
+          toast.error(errorData.error || "Failed to send OTP.");
+        } else {
+          toast.error("Unexpected error. Please try again.");
+        }
+        return;
+      }
+
+      const data = await response.json();
+      console.log(data);
+      toast.success(`Otp sent to ${userPhoneNumber}`);
+    } catch (error) {
+      toast.dismiss();
+      console.error("Error sending OTP:", error);
+      toast.error("Network error or server is unavailable.");
+    }
   };
 
   return (
@@ -94,8 +130,38 @@ function Detail({
             value={userPhoneNumber}
             onChange={(e) => setPhoneUserNumber(e)}
           />
+          <button
+            onClick={handleSendOtp}
+            type="button"
+            className="w-full bg-gray-200 p-2 text-gray-600 shadow-md hover:bg-gray-300 duration-500 "
+          >
+            Send Otp
+          </button>
         </div>
       </div>
+      {userPhoneNumber.length >= 10 ? (
+        <div className="flex Otp flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Enter Otp
+            </label>
+            <input
+              value={phoneOtp}
+              className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              onChange={(e) => setPhoneOtp(e.target.value)}
+              placeholder="Enter Otp"
+            />
+            <button
+              type="button"
+              className="p-2 bg-orange-500 text-white rounded-md active:scale-90 "
+            >
+              Verify Otp
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
 
       <div className="flex flex-wrap -mx-3 ">
         <div className="w-full px-3">
