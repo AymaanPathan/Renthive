@@ -17,8 +17,27 @@ function BookingForm() {
   const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
-  const [noOfGuest, setNoOfGuest] = useState(null);
+  const [noOfGuest, setNoOfGuest] = useState(0);
   const [phoneOtp, setPhoneOtp] = useState(null);
+
+  let localStoragePrice = localStorage.getItem("resortPrice");
+
+  const getResortById = async () => {
+    const response = await fetch(`http://localhost:3000/getResortByBodyId`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: resort_Id }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("resortPrice", data.price);
+    } else {
+      const errorData = await response.json();
+      console.log(errorData);
+    }
+  };
+
+  console.log(localStoragePrice);
 
   const updateData = () => {
     if (!userFirstName) {
@@ -39,15 +58,19 @@ function BookingForm() {
     if (noOfGuest > 20) {
       return toast.error("Max guest allowed is 20");
     }
+
+    const calculatedPrice = Number(localStoragePrice) + 2345;
+
     setBookingData(() => ({
       firstName: userFirstName,
-      LastName: userLastName,
+      lastName: userLastName,
       phone: userPhoneNumber,
       email: userEmail,
       duration: duration,
       totalGuest: noOfGuest,
-      resortName: resort.name,
+      resortName: resort ? resort.name : "",
       resortId: resort_Id,
+      totalPrice: calculatedPrice,
     }));
   };
 
@@ -68,7 +91,10 @@ function BookingForm() {
       }
     };
     fetchResort();
+    getResortById();
   }, [resort_Id]);
+
+  console.log(bookingData);
 
   return (
     <div className="mt-6 p-4">

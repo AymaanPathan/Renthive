@@ -97,3 +97,18 @@ exports.getResortById = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getResortByIdBody = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    const resort = await Resort.findOne({ _id });
+    if (!resort) {
+      res.status(400).json(resort);
+    }
+    if (resort) {
+      res.status(200).json(resort);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

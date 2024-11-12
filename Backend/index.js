@@ -8,6 +8,7 @@ const app = express();
 const upload = require("./Middleware/multer");
 const uploadApi = require("./Upload/Upload");
 const Sms = require("./SMS/Sms");
+const payment = require("./Payment/Payment");
 
 app.use(express.json());
 app.use(
@@ -63,6 +64,7 @@ Route.post("/login", Auth.Login);
 Route.post("/addResort", Resort.addResort);
 Route.get("/getAllResorts", Resort.getAllResort);
 Route.get("/getResort/:_id", Resort.getResortById);
+Route.post("/getResortByBodyId/", Resort.getResortByIdBody);
 // House & Villa
 Route.post("/addProperty", Property.addProperty);
 
@@ -74,6 +76,7 @@ Route.post("/upload", upload.array("image"), uploadApi.uploadImages);
 Route.post("/sendOtp", Sms.SendOtp);
 // Verify Otp
 Route.post("/verifyOtp", Sms.verifyOtp);
+Route.post("/pay", payment.payment);
 
 app.use(Route);
 

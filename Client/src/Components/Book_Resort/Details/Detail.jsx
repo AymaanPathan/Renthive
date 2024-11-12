@@ -36,6 +36,9 @@ function Detail({
     if (NoOfguest > 20) {
       return toast.error("Max guest allowed is 20");
     }
+    if (!isVerifying) {
+      return toast.error("Please Verify Your Number");
+    }
     handlePage(e);
   };
 
@@ -56,11 +59,7 @@ function Detail({
 
       if (!response.ok) {
         const errorData = await response.json();
-        toast.error(
-          response.status === 500
-            ? "Internal server error. Please try again later."
-            : errorData.error || "Failed to send OTP."
-        );
+        toast.error(errorData.error);
         return;
       }
 
@@ -88,10 +87,11 @@ function Detail({
         toast.dismiss();
         const data = await response.json();
         toast.success(data.message);
+        setIsVerifying(true);
       } else {
         toast.dismiss();
-        const error = await response.json();
-        toast.error(error.error);
+        toast.error("Otp is invalid");
+        setIsVerifying(false);
       }
     } catch (err) {
       toast.dismiss();
@@ -188,7 +188,11 @@ function Detail({
               onClick={verifyOtp}
               type="button"
               disabled={isVerifying}
-              className="p-2 bg-orange-500 text-white rounded-md active:scale-90 "
+              className={`w-full bg-gray-200 p-2 text-gray-600 shadow-md ${
+                isVerifying
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:bg-gray-300"
+              } duration-500`}
             >
               {`${isVerifying ? "Checking..." : "Verify Otp"}`}
             </button>
